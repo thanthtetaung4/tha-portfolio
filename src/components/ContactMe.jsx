@@ -16,7 +16,7 @@ const ContactMe = () => {
     formState: { errors },
   } = useForm();
 
-  console.log(isModalOpen);
+  // console.log(isModalOpen);
 
   const onSubmit = async (data) => {
     setIsSubmitting(true);
@@ -42,20 +42,20 @@ const ContactMe = () => {
   };
 
   return (
-    <main id="contact" className="h-screen w-screen bg-white text-primary">
-      <div className="relative flex items-center justify-center lg:h-[97%] lg:px-40 lg:py-24">
+    <main id="contact" className="w-screen bg-white text-primary lg:h-screen">
+      <div className="relative flex items-center justify-center md:py-24 lg:h-[97%] lg:px-40">
         <div className="w-4/6">
           <div className="flex-col items-center justify-center text-center lg:mb-4">
-            <h2 className="font-bold lg:mb-4 lg:text-4xl">
+            <h2 className="font-bold md:text-3xl lg:mb-4 lg:text-4xl">
               Send Me A Message!
             </h2>
-            <p className="lg:text-2xl">
+            <p className="md:text-xl lg:text-2xl">
               Is there anything you&#39;d like to <br />
               chat about or share?
             </p>
           </div>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="grid w-full grid-cols-2 gap-x-3 gap-y-5 lg:mb-4">
+            <div className="grid w-full grid-cols-2 gap-x-3 md:my-10 md:gap-y-10 lg:mb-4 lg:gap-y-5">
               <div className="flex-col items-center justify-center">
                 <label htmlFor="name" className="block text-base lg:mb-1">
                   Your Name

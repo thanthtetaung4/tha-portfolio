@@ -9,3 +9,19 @@
     scroll-behavior: smooth;
   }
 }
+
+@layer utilities {
+  .scrollbar {
+    scrollbar-width: thin;
+  }
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background-color: #aad9bb;
+    transform-origin: 0%;
+    z-index: 99;
+  }
+}
