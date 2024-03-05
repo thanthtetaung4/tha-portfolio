@@ -19,7 +19,7 @@ createServer({
   },
   seeds(server) {
     server.create("project", {
-      id: 1,
+      id: "analytixnexa",
       name: "AnalytixNexa",
       imgUrl:
         "https://tha.sgp1.cdn.digitaloceanspaces.com/tha-portfolio-images/analytixnexa.png",
@@ -28,7 +28,7 @@ createServer({
       techUsed: ["React", "MUI", "JavaScript", "Firebase"],
     });
     server.create("project", {
-      id: 2,
+      id: "serfect",
       name: "Serfect",
       imgUrl:
         "https://tha.sgp1.cdn.digitaloceanspaces.com/tha-portfolio-images/serfect.png",
@@ -38,7 +38,7 @@ createServer({
       techUsed: ["React", "TailwindCSS", "TypeScript", "Firebase"],
     });
     server.create("project", {
-      id: 3,
+      id: "tha-portfolio",
       name: "THA Portfolio",
       imgUrl:
         "https://tha.sgp1.cdn.digitaloceanspaces.com/tha-portfolio-images/portfolio.png",

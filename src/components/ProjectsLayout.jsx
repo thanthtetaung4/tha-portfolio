@@ -1,15 +1,22 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { FaGithub, FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import { useEffect, useState } from "react";
 
 const ProjectsLayout = () => {
   const { scrollYProgress } = useScroll();
+
+  const [projectsLoading, setProjectsLoading] = useState(true);
 
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
     restDelta: 0.001,
   });
+
+  useEffect(() => {
+    scaleX.set(0);
+  }, [projectsLoading, scaleX]);
 
   const navigate = useNavigate();
   return (
@@ -72,41 +79,44 @@ const ProjectsLayout = () => {
             </defs>
           </svg>
         </h1>
+
         <motion.div className="progress-bar" style={{ scaleX }} />
       </header>
-      <div className="flex-col bg-slate-500">
+      <div className="mb-10 flex-col md:mb-10">
         <main className="flex-grow">
-          <Outlet props={"random shit"} />
+          <Outlet context={[setProjectsLoading]} />
         </main>
-        <footer className="h-36 w-full  bg-purpleAccent sm:flex">
-          <div className="flex h-3/6  items-center text-center text-2xl text-secondary sm:h-full sm:w-4/6 sm:px-12 sm:text-left ">
-            <h2 className="w-full">© Thant Htet Aung 2024</h2>
-          </div>
-          <div className="flex h-3/6 items-center justify-center text-4xl text-secondary sm:h-full sm:w-2/6 ">
-            <a
-              href="https://github.com/thanthtetaung4"
-              target="blank"
-              className="mr-10 sm:mr-5 md:mr-16"
-            >
-              <FaGithub className="cursor-pointer text-4xl transition delay-100 ease-in-out hover:text-white lg:ml-4" />
-            </a>
-            <a
-              href="https://www.instagram.com/thaaaa.zip/"
-              target="blank"
-              className="mr-10 sm:mr-5 md:mr-16"
-            >
-              <FaInstagram className="cursor-pointer text-4xl transition delay-100 ease-in-out hover:text-white lg:ml-4" />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/thant-htet-aung/"
-              target="blank"
-              className="mr-10 sm:mr-5 md:mr-16"
-            >
-              <FaLinkedinIn className="cursor-pointer text-4xl transition delay-100 ease-in-out hover:text-white lg:ml-4" />
-            </a>
-          </div>
-        </footer>
       </div>
+      <footer
+        className={`${!projectsLoading ? " h-36 w-full bg-purpleAccent sm:flex" : "fixed bottom-0 h-36 w-full bg-purpleAccent sm:flex"}`}
+      >
+        <div className="flex h-3/6  items-center text-center text-2xl text-secondary sm:h-full sm:w-4/6 sm:px-12 sm:text-left ">
+          <h2 className="w-full">© Thant Htet Aung 2024</h2>
+        </div>
+        <div className="flex h-3/6 items-center justify-center text-4xl text-secondary sm:h-full sm:w-2/6 ">
+          <a
+            href="https://github.com/thanthtetaung4"
+            target="blank"
+            className="mr-10 sm:mr-5 md:mr-16"
+          >
+            <FaGithub className="cursor-pointer text-4xl transition delay-100 ease-in-out hover:text-white lg:ml-4" />
+          </a>
+          <a
+            href="https://www.instagram.com/thaaaa.zip/"
+            target="blank"
+            className="mr-10 sm:mr-5 md:mr-16"
+          >
+            <FaInstagram className="cursor-pointer text-4xl transition delay-100 ease-in-out hover:text-white lg:ml-4" />
+          </a>
+          <a
+            href="https://www.linkedin.com/in/thant-htet-aung/"
+            target="blank"
+            className="mr-10 sm:mr-5 md:mr-16"
+          >
+            <FaLinkedinIn className="cursor-pointer text-4xl transition delay-100 ease-in-out hover:text-white lg:ml-4" />
+          </a>
+        </div>
+      </footer>
     </section> //trying to put the footer to the bottom of the page but stuck because I need to use state management like redux
   );
 };

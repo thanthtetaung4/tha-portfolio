@@ -7,11 +7,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    // <main className="">
-    //   {/* <Sections /> */}
-    //   <Projects />
-    // </main>
-
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Sections />} />

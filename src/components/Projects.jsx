@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
 import LoadingElements from "./LoadingElements";
+import { useOutletContext, useNavigate } from "react-router-dom";
+import Button from "./Button";
 
 const Projects = () => {
+  const [setProjectsLoading] = useOutletContext();
   const [projects, setProjects] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("/api/projects")
@@ -12,6 +17,7 @@ const Projects = () => {
         console.log(data);
         setProjects(data.projects);
         setIsLoading(false);
+        setProjectsLoading(false);
       })
       .catch((e) => console.log(e));
   }, []);
@@ -26,6 +32,7 @@ const Projects = () => {
           src={project.imgUrl}
           alt="project-img"
           className="rounded object-cover transition duration-200 ease-in-out hover:scale-150"
+          onClick={() => navigate(`/projects/${project.id}`)}
         />
       </div>
       <h2 className="mb-2 font-semibold md:text-xl">{project.name}</h2>
@@ -34,7 +41,10 @@ const Projects = () => {
         <div>{project.description}</div>
       </div>
       <div className="flex justify-end">
-        <button className="rounded border border-primary px-4 py-2 text-lg text-purpleAccent transition duration-200 ease-in-out hover:border-purpleAccent hover:bg-purpleAccent  hover:text-secondary">
+        <button
+          onClick={() => navigate(`/projects/${project.id}`)}
+          className="rounded border border-primary px-4 py-2 text-lg text-purpleAccent transition-[color,box-shadow] duration-[400ms,700ms] ease-in-out hover:text-white hover:shadow-[inset_17rem_0_0_0] hover:shadow-primary"
+        >
           Check Details
         </button>
       </div>
