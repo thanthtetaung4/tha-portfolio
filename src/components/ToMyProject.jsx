@@ -1,6 +1,8 @@
 import Button from "./Button";
+import { useNavigate } from "react-router-dom";
 
 const ToMyProject = () => {
+  const navigate = useNavigate();
   return (
     <main className="flex h-screen w-screen items-center justify-center bg-white text-primary">
       <div className="flex h-4/6 w-9/12 gap-x-5">
@@ -12,19 +14,24 @@ const ToMyProject = () => {
             </p>
           </div>
           <div className="flex h-1/4 justify-center ">
-            <Button className="">CHECK MY WORKS</Button>
+            <Button className="" onClickFunc={() => navigate("/projects")}>
+              CHECK MY WORKS
+            </Button>
           </div>
         </div>
 
         <div className="b w-3/6 flex-col justify-between gap-y-10 border border-primary ">
           <div className="h-3/4 p-5">
-            <h2 className="mb-4 text-4xl font-bold">Game Dev</h2>
+            <h2 className="mb-4 text-4xl font-bold">Mobile App Dev</h2>
             <p className="text-xl">
-              As I like to play games sometimes I also make some games 🎮.
+              As I am crazy about application development, I also develop mobile
+              apps 📱.
             </p>
           </div>
           <div className="flex h-1/4 justify-center ">
-            <Button className="">CHECK MY WORKS</Button>
+            <Button className="" onClick={() => navigate("/projects")}>
+              CHECK MY WORKS
+            </Button>
           </div>
         </div>
       </div>

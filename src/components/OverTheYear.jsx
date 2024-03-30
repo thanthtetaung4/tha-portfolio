@@ -3,8 +3,8 @@ import dev from "../assets/dev.svg";
 const OverTheYear = () => {
   return (
     <main className="w-screen bg-primary md:py-24 lg:h-screen lg:px-32 lg:py-24">
-      <div className="  text-white md:grid md:justify-items-center md:bg-center md:bg-no-repeat lg:h-full lg:grid-cols-2 lg:bg-none">
-        <div className=" md:w-8/12 md:p-5 md:backdrop-blur-[4px] lg:h-full lg:w-full lg:p-3">
+      <div className="text-white md:grid md:justify-items-center md:bg-center md:bg-no-repeat lg:h-full lg:grid-cols-2 lg:bg-none">
+        <div className="md:w-8/12 md:p-5 md:backdrop-blur-[4px] lg:h-full lg:w-full lg:p-3">
           <h2 className="font-bold text-secondary md:text-2xl lg:text-3xl">
             Over the year,
           </h2>

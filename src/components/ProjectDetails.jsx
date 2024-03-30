@@ -29,24 +29,32 @@ const ProjectDetails = () => {
     <>
       {project && (
         <div className="h-screen font-mont md:px-10 lg:px-20">
-          <h1 className="font-bold text-purpleAccent lg:mb-5 lg:text-4xl">
+          <h1 className="font-bold text-purpleAccent md:mb-5 md:text-3xl lg:mb-5 lg:text-4xl">
             {project.name}
           </h1>
 
-          <div className="h-4/5 lg:px-40">
+          <div className="md:px-28 md:py-5 lg:h-4/5 lg:px-40">
             <div className="flex w-full items-center justify-center md:h-2/4 lg:mb-5">
               <img
                 src={project.imgUrl}
                 alt={`${project.name} image`}
-                className="object-cover lg:h-full"
+                className="h-full rounded-xl object-cover"
               />
             </div>
-            <div className="md:grid md:h-2/4 md:grid-cols-2 lg:mb-5">
-              <div>
-                <h2>Project Details</h2>
+            <div className="mt-5 h-2/4 md:p-4 lg:mb-5 lg:grid lg:h-auto lg:grid-cols-2 lg:gap-5">
+              <div className="h-2/4 md:mt-5">
+                <h2 className="font-semibold md:text-2xl">Project Details</h2>
+                <p className="mt-5 md:text-xl">{project.description}</p>
               </div>
-              <div>
-                <h2>What I used</h2>
+              <div className="h-2/4 md:mt-5 lg:h-auto">
+                <h2 className="font-semibold md:text-2xl">What I used</h2>
+                <div className="mt-5 md:text-xl">
+                  {project.techUsed.map((tech, i) => (
+                    <ul key={i} className="">
+                      <li className="mb-5">{tech}</li>
+                    </ul>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
