@@ -11,66 +11,87 @@ import {
   SiLinux,
   SiOrg,
 } from "react-icons/si";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { ShineBorder } from "@/components/ui/shine-border"
 
 function ProjectCards() {
 	const projects = [
 	{
 		title: "AnalytixNexa",
 		description:
-		"Open-source data analysis web app that empowers small businesses to harness the power of data—for free.",
+		"Open-source data analysis web app",
 		content:
 		"Empowers small businesses to visualize, analyze, and understand their data through an intuitive dashboard with Firebase authentication and real-time analytics.",
-		techStack: [<SiReact key={"react"}/>, <SiMui key={"mui"}/>, <SiFlask key={"flask"}/>, <SiFirebase key={"firebase"}/>, <SiPython key={"py"}/>],
+		techStack: [<SiReact key={"react"} fontSize={24}/>, <SiMui key={"mui"} fontSize={24}/>, <SiFlask key={"flask"} fontSize={24}/>, <SiFirebase key={"firebase"} fontSize={24}/>, <SiPython key={"py"} fontSize={24}/>],
 	},
 	{
 		title: "PaletteGen",
 		description:
-		"AI-powered color palette generator that takes the guesswork out of design.",
+		"AI-powered color palette generator",
 		content:
 		"Generates aesthetic color palettes using Google Gemini AI and serves designers with instant creative inspiration.",
-		techStack: [<SiNextdotjs key={"next"}/>, <SiDeno key={"deno"}/>, <SiFlask key={"flask"}/>, <SiPython key={"py"}/>, <SiGoogle key={"g"}/>],
+		techStack: [<SiNextdotjs key={"next"} fontSize={24}/>, <SiDeno key={"deno"} fontSize={24}/>, <SiFlask key={"flask"} fontSize={24}/>, <SiPython key={"py"} fontSize={24}/>, <SiGoogle key={"g"} fontSize={24}/>],
 	},
 	{
 		title: "Mini Shell (Bash Clone)",
 		description:
-		"Bash-like shell written in pure C with enhancements, including proper handling of SIGPIPE.",
+		"Bash-like shell written in pure C",
 		content:
 		"Implements core shell features such as pipes, redirections, and environment variables — entirely built from scratch in C.",
-		techStack: [<SiC key={"C"}/>, <SiLinux key={"Linux"}/>],
+		techStack: [<SiC key={"C"} fontSize={24}/>, <SiLinux key={"Linux"} fontSize={24}/>],
 	},
 	{
 		title: "Mini RT (Ray Tracing Engine)",
 		description:
-		"Mini ray-tracing engine implemented in C using the MiniLibX library.",
+		"Mini ray-tracing engine implemented in C",
 		content:
 		"Renders realistic 3D scenes using ray tracing with lighting, shadows, and reflections via MiniLibX.",
-		techStack: [<SiC key={"C"}/>, <SiOrg key={"Xorg"}/>],
+		techStack: [<SiC key={"C"} fontSize={24}/>, <SiOrg key={"Xorg"} fontSize={24}/>],
 	},
 	];
 
 	return (
-		<div>
+		<div className="mt-5">
+			<div className="grid gap-6">
 			{
 				projects.map(({title, description, content, techStack}, index) => (
-					<>
-						{/* add magic cards */}
-					</>
+					<Card key={index} className="relative overflow-hidden">
+						<ShineBorder shineColor="#6A5ACD" />
+						<CardHeader>
+							<CardTitle>{title}</CardTitle>
+							<CardDescription className="flex justify-between">
+								<div>{description}</div>
+							</CardDescription>
+						</CardHeader>
+						<CardContent>
+							{content}
+						</CardContent>
+						<CardFooter>
+							<div className="flex justify-between overflow-scroll" style={{ width: `${24 * (techStack.length * 1.5)}px` }}>
+								{techStack}
+							</div>
+						</CardFooter>
+					</Card>
 				))
 			}
+			</div>
 		</div>
 	)
 }
 
 export function Projects ()  {
 
-
-
-
 	return (
 		<section className="mt-5" id="projects">
 			<h2 className="text-2xl font-bold text-black dark:text-white">Projects</h2>
 			<ProjectCards/>
-			<div className="h-52"></div>
 		</section>
 	)
 }

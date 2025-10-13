@@ -47,7 +47,7 @@ export function CertCards() {
 					<CardContent>
 						{content}
 					</CardContent>
-			</Card>
+				</Card>
 			))}
 		</div>
 	)
