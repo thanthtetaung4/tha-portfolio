@@ -19,7 +19,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { ShineBorder } from "@/components/ui/shine-border"
+import { BorderBeam } from "@/components/ui/border-beam"
 
 function ProjectCards() {
 	const projects = [
@@ -63,7 +63,6 @@ function ProjectCards() {
 			{
 				projects.map(({title, description, content, techStack}, index) => (
 					<Card key={index} className="relative overflow-hidden">
-						<ShineBorder shineColor="#6A5ACD" />
 						<CardHeader>
 							<CardTitle>{title}</CardTitle>
 							<CardDescription className="flex justify-between">
@@ -78,6 +77,19 @@ function ProjectCards() {
 								{techStack}
 							</div>
 						</CardFooter>
+						 <BorderBeam
+						duration={4}
+						size={400}
+						borderWidth={2}
+						className="from-transparent via-blue-500 to-transparent"
+						/>
+						<BorderBeam
+						duration={4}
+						delay={3}
+						size={400}
+						borderWidth={2}
+						className="from-transparent via-blue-500 to-transparent"
+						/>
 					</Card>
 				))
 			}
