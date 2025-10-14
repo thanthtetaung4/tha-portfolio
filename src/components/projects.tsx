@@ -1,3 +1,5 @@
+'use client'
+
 import {
   SiReact,
   SiMui,
@@ -21,9 +23,14 @@ import {
 } from "@/components/ui/card"
 import { BorderBeam } from "@/components/ui/border-beam"
 import { ShinyButton } from "./ui/shiny-button";
-import Link from "next/link";
+import useScreenSize from "./hook/useScreenSize";
 
 function ProjectCards() {
+	const {width, height} = useScreenSize();
+	console.log(width, height);
+
+	// md w => 768
+	// lg w => 1024
 	const projects = [
 	{
 		title: "AnalytixNexa",
@@ -61,7 +68,7 @@ function ProjectCards() {
 
 	return (
 		<div className="mt-5">
-			<div className="grid gap-6">
+			<div className="grid gap-6 md:grid-cols-2">
 			{
 				projects.map(({title, description, content, techStack}, index) => (
 					<Card key={index} className="relative overflow-hidden">

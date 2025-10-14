@@ -1,6 +1,7 @@
 "use client"
 
 import { useTheme } from "next-themes"
+import useScreenSize from "./hook/useScreenSize"
 
 
 import {
@@ -47,10 +48,10 @@ export function JobCard() {
 	return (
 		<section id="exp">
 			<h2 className="text-2xl font-bold text-black dark:text-white">Experiences</h2>
-			<div className="grid gap-4 mt-4">
+			<div className="grid gap-4 mt-4 w-ful">
 				{
 					experiences.map(({title, description, duration, lists, content}, index) => (
-						<Card key={index} className="w-full max-w-sm border-none p-0 shadow-none">
+						<Card key={index} className="w-full max-w-sm md:max-w-none border-none p-0 shadow-none">
 							<MagicCard
 							gradientColor={theme === "dark" ? "#262626" : "#D9D9D955"}
 							className="p-0"
@@ -81,35 +82,45 @@ export function JobCard() {
 				}
 			</div>
 		</section>
-	)
-}
+		);
+	}
 
-export function Hero () {
+export function Hero() {
+	const { width } = useScreenSize();
+	// Calculate margin-left as a proportion of screen width
+	let ml = 0;
+	if (width >= 1536) {
+		ml = -width * 0.06; // ~-90px for 1536px
+	} else if (width >= 810) {
+		ml = -width * 0.04; // ~-32px for 810px
+	} else {
+		ml = 0;
+	}
+
 	return (
 		<section id="hero">
-			<div className="grid gap-2">
-				<p className="text-3xl font-bold text-black dark:text-white inline-block md:leading-[-0.5]">Hi 👋, I am </p>
-				<div className="">
+			<div className="grid gap-2 md:grid-cols-4 md:justify-between md:items-start lg:grid-cols-12">
+				<p className="text-3xl font-boldtext-white inline-block md:leading-[-2.7] lg:col-span-2">Hi 👋, I am </p>
+				<div className="md:col-span-3 lg:col-span-10" style={{ marginLeft: ml }}>
 					<WordRotate
 						className="text-4xl font-bold text-black dark:text-white inline-block"
 						words={["Thant", "A Developer"]}/>
 				</div>
-				<p className="mt-5 text-lg">Full-stack software developer skilled in system programming and full-stack development,
+				<p className="mt-5 text-lg md:col-span-full">Full-stack software developer skilled in system programming and full-stack development,
 					with experience leading projects, freelancing, and winning hackathons.</p>
-
 			</div>
 			<div className="mt-5 flex justify-around">
-					<div className="w-1/2 flex justify-around items-center">
-						<Link href="https://github.com/thanthtetaung4" target="blank">
-							<FaGithub className="text-2xl"/>
-						</Link>
-						<Link href="https://www.linkedin.com/in/thant-htet-aung/" target="blank">
-							<FaLinkedin className="text-2xl"/>
-						</Link>
-					</div>
-					<ShinyButton link="./resume.pdf">
-						Get My Resume
-					</ShinyButton>
+				<div className="w-1/2 flex justify-around items-center">
+					<Link href="https://github.com/thanthtetaung4" target="blank">
+						<FaGithub className="text-2xl"/>
+					</Link>
+					<Link href="https://www.linkedin.com/in/thant-htet-aung/" target="blank">
+						<FaLinkedin className="text-2xl"/>
+					</Link>
+				</div>
+				<ShinyButton link="./resume.pdf">
+					Get My Resume
+				</ShinyButton>
 			</div>
 			<div className="mt-5">
 				<JobCard/>

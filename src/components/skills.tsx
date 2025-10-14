@@ -129,8 +129,8 @@ export function SkillsSM () {
 	);
 
 	return (
-	<div className="mt-5 flex flex-col items-center justify-center w-full">
-		<div className="md:hidden w-full">
+	<div className="md:hidden mt-5 flex flex-col items-center justify-center w-full">
+		<div className="w-full">
 			<div className="w-full">
 				<div className="grid grid-cols-2 gap-2 overflow-hidden">
 						{paginatedSkills.map(({ name, icon }, i) => (
@@ -180,31 +180,102 @@ export function SkillsSM () {
 }
 
 export function SkillsMD () {
-	const {theme} = useTheme();
-
 	const skills = [
 		{
 			name: "NextJS",
-			icon: "",
+			icon: <RiNextjsFill className="text-5xl"/>,
 
-		}
-	]
+		},
+		{
+			name: "ReactJS",
+			icon: <FaReact className="text-5xl"/>,
+
+		},
+		{
+			name: "Docker",
+			icon: <FaDocker className="text-5xl"/>,
+
+		},
+		{
+			name: "TailwindCSS",
+			icon: <RiTailwindCssFill className="text-5xl"/>,
+
+		},
+		{
+			name: "NodeJS",
+			icon: <FaNodeJs className="text-5xl"/>,
+
+		},
+		{
+			name: "Flask",
+			icon: <SiFlask className="text-5xl"/>,
+
+		},
+		{
+			name: "C++",
+			icon: <Image alt="cpp" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" width={48} height={48} className="grayscale"/>
+
+		},
+		{
+			name: "C",
+			icon: <CIcon/>,
+
+		},
+		{
+			name: "JavaScript",
+			icon: <FaJs className="text-5xl"/>
+
+		},
+		{
+			name: "Python",
+			icon: <FaPython className="text-5xl"/>,
+
+		},
+		{
+			name: "HTML",
+			icon: <FaHtml5 className="text-5xl"/>
+
+		},
+		{
+			name: "CSS",
+			icon: <FaCss3 className="text-5xl"/>,
+
+		},
+		{
+			name: "GitHub",
+			icon: <BsGithub className="text-5xl"/>
+
+		},
+		{
+			name: "VS Code",
+			icon: <VscVscode className="text-5xl"/>,
+		},
+		{
+			name: "Git",
+			icon: <FaGitAlt className="text-5xl"/>
+		},
+		{
+			name: "Shell",
+			icon: <SiGnubash className="text-5xl"/>,
+		},
+		{
+			name: "Linux",
+			icon: <FaLinux className="text-5xl"/>,
+		},
+	];
 
 	return (<>
-				<div className="hidden md:block">
+				<div className="hidden md:grid md:grid-cols-3 md:gap-1.5 mt-4">
 					{
 					skills.map(({name, icon}, index) => (
-						<Card key={index} className="w-full max-w-sm border-none p-0 shadow-none">
-							<MagicCard
-							gradientColor={theme === "dark" ? "#262626" : "#D9D9D955"}
-							className="p-0"
-							>
-								<div className="relative flex items-center gap-3 w-full">
-									<div className="text-2xl">{icon}</div>
-									<span className="font-semibold text-lg">{name}</span>
-								</div>
-							</MagicCard>
-						</Card>
+						<Card className="border-none p-0 shadow-none" key={index}>
+									<MagicCard className="p-0">
+										<div className="flex items-center gap-3 w-full p-3">
+											{icon}
+											<span className="font-bold text-xl">{name}</span>
+										</div>
+									</MagicCard>
+								</Card>
 					))
 				}
 				</div>

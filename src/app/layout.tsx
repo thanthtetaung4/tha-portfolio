@@ -3,7 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Particles } from "@/components/ui/particles"
 import { MyDock } from "@/components/dock"
-import { Pointer } from "@/components/ui/pointer"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,7 +29,6 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased dark min-h-screen w-full pt-10`}
       >
-        {/* <Pointer/> */}
         <Particles
           className="fixed inset-0 z-0"
           quantity={500}
