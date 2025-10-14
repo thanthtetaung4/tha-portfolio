@@ -94,7 +94,7 @@ export function Hero () {
 						className="text-4xl font-bold text-black dark:text-white inline-block"
 						words={["Thant", "A Developer"]}/>
 				</div>
-				<p className="mt-5 text-lg">Full-stack software developer skilled in system programming and UI/UX,
+				<p className="mt-5 text-lg">Full-stack software developer skilled in system programming and full-stack development,
 					with experience leading projects, freelancing, and winning hackathons.</p>
 
 			</div>

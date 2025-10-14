@@ -20,6 +20,8 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { BorderBeam } from "@/components/ui/border-beam"
+import { ShinyButton } from "./ui/shiny-button";
+import Link from "next/link";
 
 function ProjectCards() {
 	const projects = [
@@ -104,6 +106,9 @@ export function Projects ()  {
 		<section className="mt-5" id="projects">
 			<h2 className="text-2xl font-bold text-black dark:text-white">Projects</h2>
 			<ProjectCards/>
+			<div className="flex justify-center mt-4">
+				<ShinyButton link="https://github.com/thanthtetaung4?tab=repositories"><span className="text-lg font-bold">More On My GitHub</span></ShinyButton>
+			</div>
 		</section>
 	)
 }
