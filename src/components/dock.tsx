@@ -1,8 +1,6 @@
 "use client"
 
 import React from "react"
-import Link from "next/link";
-
 
 import { Dock, DockIcon } from "@/components/ui/dock"
 import { PiCertificate } from "react-icons/pi";

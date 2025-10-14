@@ -11,7 +11,6 @@ import {
   SiGoogle,
   SiC,
   SiLinux,
-  SiOrg,
 } from "react-icons/si";
 import {
   Card,
@@ -26,11 +25,7 @@ import { ShinyButton } from "./ui/shiny-button";
 import useScreenSize from "./hook/useScreenSize";
 
 function ProjectCards() {
-	const {width, height} = useScreenSize();
-	console.log(width, height);
-
-	// md w => 768
-	// lg w => 1024
+	const {width} = useScreenSize();
 
 	let duration = 4;
 	if (width >= 1024) {

@@ -1,11 +1,9 @@
 'use client'
 
 import { useState } from "react";
-import { ShinyButton } from "./ui/shiny-button";
 import { MagicCard } from "./ui/magic-card";
-import { useTheme } from "next-themes";
 import { Card } from "./ui/card";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
 
 import { RiNextjsFill } from "react-icons/ri";
@@ -22,7 +20,7 @@ import { FaPython } from "react-icons/fa";
 import { FaLinux } from "react-icons/fa";
 import { SiGnubash } from "react-icons/si";
 import { BsGithub } from "react-icons/bs";
-import { FaAngleLeft, FaAngleRight, FaArrowLeft, FaGitAlt } from "react-icons/fa6";
+import { FaAngleLeft, FaAngleRight, FaGitAlt } from "react-icons/fa6";
 import { Button } from "./ui/button";
 
 const CIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -133,7 +131,7 @@ export function SkillsSM () {
 		<div className="w-full">
 			<div className="w-full">
 				<div className="grid grid-cols-2 gap-2 overflow-hidden">
-						{paginatedSkills.map(({ name, icon }, i) => (
+						{paginatedSkills.map(({ name, icon }) => (
 							<motion.div
 								key={name}
 								initial={{ opacity: 0, x: page > 1 ? 40 : -40 }}
