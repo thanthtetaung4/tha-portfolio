@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Thant Htet Aung – Portfolio
 
-## Getting Started
+Welcome to my personal developer portfolio! This project showcases my skills, projects, and achievements as a full-stack software developer, with a focus on system programming, web development, and leadership experience.
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Responsive Design:** Fully responsive and mobile-friendly layout
+- **Animated UI:** Modern animations and interactive elements
+- **Project Showcase:** Highlights selected projects with tech stack icons
+- **Skills & Achievements:** Visual display of skills and certifications
+- **Contact Section:** Easy ways to reach out via LinkedIn, Discord, Email, and WhatsApp
+- **Downloadable Resume:** Quick access to my latest resume
+
+## 🛠️ Tech Stack
+
+- **Framework:** Next.js (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **UI Components:** Custom components, Framer Motion, React Icons
+- **Other:** Vercel for deployment
+
+## 📂 Project Structure
+
+```
+/tha-portfolio
+├── public/           # Static assets (SVGs, PDF resume, etc.)
+├── src/
+│   ├── app/          # Next.js app directory
+│   ├── components/   # UI and feature components
+│   ├── lib/          # Utility functions
+│   └── ...
+├── package.json
+├── tsconfig.json
+├── tailwind.config.js
+└── ...
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🧑‍💻 Getting Started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/thanthtetaung4/tha-portfolio.git
+   cd tha-portfolio
+   ```
+2. **Install dependencies:**
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+3. **Run the development server:**
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+4. **Open in your browser:**
+   Visit [http://localhost:3000](http://localhost:3000)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🌐 Deployment
 
-## Learn More
+This portfolio is ready to deploy on [Vercel](https://vercel.com/) or any platform supporting Next.js.
 
-To learn more about Next.js, take a look at the following resources:
+## 📬 Contact
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **LinkedIn:** [thant-htet-aung](https://www.linkedin.com/in/thant-htet-aung/)
+- **Discord:** thanthtetaung
+- **Email:** thanthtetaung3502@gmail.com
+- **WhatsApp:** +65 8060 1305
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+_Designed and developed by Thant Htet Aung_
