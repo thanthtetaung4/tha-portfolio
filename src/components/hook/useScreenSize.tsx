@@ -1,14 +1,16 @@
-'use client'
+"use client"
 
 import { useState, useEffect } from 'react';
 
 const useScreenSize = () => {
+const isClient = typeof window !== 'undefined';
 const [screenSize, setScreenSize] = useState({
-	width: window.innerWidth,
-	height: window.innerHeight,
+	width: isClient ? window.innerWidth : 0,
+	height: isClient ? window.innerHeight : 0,
 });
 
 useEffect(() => {
+	if (!isClient) return;
 	const handleResize = () => {
 	setScreenSize({
 		width: window.innerWidth,
@@ -17,12 +19,8 @@ useEffect(() => {
 	};
 
 	window.addEventListener('resize', handleResize);
-
-	// Clean up the event listener on component unmount
-	return () => {
-	window.removeEventListener('resize', handleResize);
-	};
-}, []); // Empty dependency array ensures this runs only once on mount
+	return () => window.removeEventListener('resize', handleResize);
+}, [isClient]);
 
 return screenSize;
 };
