@@ -31,6 +31,14 @@ function ProjectCards() {
 
 	// md w => 768
 	// lg w => 1024
+
+	let duration = 4;
+	if (width >= 1024) {
+		duration = 6;
+	} else if (width >= 768) {
+		duration = 8;
+	}
+
 	const projects = [
 	{
 		title: "AnalytixNexa",
@@ -62,7 +70,7 @@ function ProjectCards() {
 		"Mini ray-tracing engine implemented in C",
 		content:
 		"Renders realistic 3D scenes using ray tracing with lighting, shadows, and reflections via MiniLibX.",
-		techStack: [<SiC key={"C"} fontSize={24}/>, <SiOrg key={"Xorg"} fontSize={24}/>],
+		techStack: [<SiC key={"C"} fontSize={24}/>],
 	},
 	];
 
@@ -87,13 +95,13 @@ function ProjectCards() {
 							</div>
 						</CardFooter>
 						 <BorderBeam
-						duration={4}
+						duration={duration}
 						size={400}
 						borderWidth={2}
 						className="from-transparent via-blue-500 to-transparent"
 						/>
 						<BorderBeam
-						duration={4}
+						duration={duration}
 						delay={3}
 						size={400}
 						borderWidth={2}
