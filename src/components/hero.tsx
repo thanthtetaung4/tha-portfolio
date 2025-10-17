@@ -28,9 +28,9 @@ export function JobCard() {
 								description: "Goodev",
 								duration: "Present",
 								lists: ["Consult",
-											"Designe",
-											"Develope",
-											"Delivere"
+											"Design",
+											"Develop",
+											"Deliver"
 										],
 								content:"Based on the client needs"
 							},
