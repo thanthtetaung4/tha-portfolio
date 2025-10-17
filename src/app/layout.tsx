@@ -36,7 +36,7 @@ export default function RootLayout({
           refresh
         />
 
-        <main className="relative z-10 flex justify-center">
+        <main className="relative z-10 flex justify-center lg:px-20">
           {children}
           <MyDock />
         </main>

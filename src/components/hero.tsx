@@ -2,6 +2,7 @@
 
 import { useTheme } from "next-themes"
 import useScreenSize from "./hook/useScreenSize"
+import { useState, useEffect } from "react"
 
 
 import {
@@ -48,13 +49,13 @@ export function JobCard() {
 	return (
 		<section id="exp">
 			<h2 className="text-2xl font-bold text-black dark:text-white">Experiences</h2>
-			<div className="grid gap-4 mt-4 w-ful">
+			<div className="grid gap-4 mt-4 w-ful lg:grid-cols-2">
 				{
 					experiences.map(({title, description, duration, lists, content}, index) => (
-						<Card key={index} className="w-full max-w-sm md:max-w-none border-none p-0 shadow-none">
+						<Card key={index} className="h-full w-full max-w-sm md:max-w-none border-none p-0 shadow-none">
 							<MagicCard
 							gradientColor={theme === "dark" ? "#262626" : "#D9D9D955"}
-							className="p-0"
+							className="p-0 h-full"
 							>
 								<CardHeader className="border-border border-b p-4 [.border-b]:pb-4">
 									<CardTitle>{title}</CardTitle>
@@ -87,35 +88,42 @@ export function JobCard() {
 
 export function Hero() {
 	const { width } = useScreenSize();
-	// Calculate margin-left as a proportion of screen width
-	let ml = 0;
-	if (width >= 1536) {
-		ml = -width * 0.06; // ~-90px for 1536px
-	} else if (width >= 810) {
-		ml = -width * 0.04; // ~-32px for 810px
-	} else {
-		ml = 0;
-	}
+	const [ml, setMl] = useState(0);
+
+	useEffect(() => {
+		if (!width) return;
+
+		let newMl = 0;
+		if (width >= 1536) {
+			newMl = -width * 0.04;
+		} else if (width >= 810) {
+			newMl = -width * 0.04;
+		} else {
+			newMl = 0;
+		}
+
+		setMl(newMl);
+	}, [width]);
 
 	return (
 		<section id="hero">
 			<div className="grid gap-2 md:grid-cols-4 md:justify-between md:items-start lg:grid-cols-12">
 				<p className="text-3xl font-boldtext-white inline-block md:leading-[-2.7] lg:col-span-2">Hi 👋, I am </p>
-				<div className="md:col-span-3 lg:col-span-10" style={{ marginLeft: ml }}>
+				<div className="md:col-span-3 lg:col-span-10" style={{ marginLeft: ml }} id="word">
 					<WordRotate
 						className="text-4xl font-bold text-black dark:text-white inline-block"
 						words={["Thant", "A Developer"]}/>
 				</div>
-				<p className="mt-5 text-lg md:col-span-full">Full-stack software developer skilled in system programming and full-stack development,
-					with experience leading projects, freelancing, and winning hackathons.</p>
+				<p className="mt-5 text-lg md:col-span-full md:text-xl">Full-stack software developer skilled in system programming and full-stack development,
+					with experience leading projects, freelancing, releasing tool and winning hackathons.</p>
 			</div>
 			<div className="mt-5 flex justify-around">
 				<div className="w-1/2 flex justify-around items-center">
 					<Link href="https://github.com/thanthtetaung4" target="blank">
-						<FaGithub className="text-2xl"/>
+						<FaGithub className="text-2xl md:text-3xl"/>
 					</Link>
 					<Link href="https://www.linkedin.com/in/thant-htet-aung/" target="blank">
-						<FaLinkedin className="text-2xl"/>
+						<FaLinkedin className="text-2xl md:text-3xl"/>
 					</Link>
 				</div>
 				<ShinyButton link="./resume.pdf">
