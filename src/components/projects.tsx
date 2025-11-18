@@ -85,7 +85,7 @@ function ProjectCards() {
 							{content}
 						</CardContent>
 						<CardFooter>
-							<div className="flex justify-between overflow-scroll" style={{ width: `${24 * (techStack.length * 1.5)}px` }}>
+							<div className="flex justify-between overflow-hidden" style={{ width: `${24 * (techStack.length * 1.5)}px` }}>
 								{techStack}
 							</div>
 						</CardFooter>
