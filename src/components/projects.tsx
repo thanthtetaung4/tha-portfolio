@@ -26,6 +26,8 @@ import {
 import { BorderBeam } from "@/components/ui/border-beam";
 import { ShinyButton } from "./ui/shiny-button";
 import useScreenSize from "./hook/useScreenSize";
+import { Button } from "./ui/button";
+import Link from "next/link";
 
 function ProjectCards() {
   const { width } = useScreenSize();
@@ -39,11 +41,11 @@ function ProjectCards() {
 
   const projects = [
     {
-      title: "Knoverse",
+      title: "Third Eye",
       description:
-        "Knoverse is a collaborative platform that enables teams to engage in AI-powered chat system driven by their internal documents.",
+        "Third Eye is a new fact checker that can classify the news being true or false and give back the related news about user input and inform decission based on the actual news.",
       content:
-        "It enables users to ask natural-language questions about their team’s uploaded documents and receive accurate, contextual answers powered by a Retrieval-Augmented Generation (RAG) system. The platform also provides administrators with full control over teams, users, permissions, and activity analytics, allowing organizations to understand engagement and knowledge usage across teams.",
+        "Third Eye is powerd by a ReAct loop, whcih can reason and take action based on the information fetched from the internet.",
       techStack: [
         <SiNextdotjs key={"next"} fontSize={24} />,
         <SiPython key={"py"} fontSize={24} />,
@@ -51,6 +53,22 @@ function ProjectCards() {
         <SiOllama key={"ollama"} fontSize={24} />,
         <RiSupabaseLine key={"supabase"} fontSize={24} />,
       ],
+      link: "https://github.com/Th1rd3yE",
+    },
+    {
+      title: "Knoverse",
+      description:
+        "Knoverse is a collaborative platform that enables teams to engage in AI-powered chat system driven by their internal documents.",
+      content:
+        "This RAG-powered platform allows teams to query uploaded documents using natural language while providing administrators with centralized control over user permissions and knowledge engagement analytics.",
+      techStack: [
+        <SiNextdotjs key={"next"} fontSize={24} />,
+        <SiPython key={"py"} fontSize={24} />,
+        <SiLangchain key={"lc"} fontSize={24} />,
+        <SiOllama key={"ollama"} fontSize={24} />,
+        <RiSupabaseLine key={"supabase"} fontSize={24} />,
+      ],
+      link: "https://github.com/thanthtetaung4/Knoverse",
     },
     {
       title: "AnalytixNexa",
@@ -64,6 +82,7 @@ function ProjectCards() {
         <SiFirebase key={"firebase"} fontSize={24} />,
         <SiPython key={"py"} fontSize={24} />,
       ],
+      link: "https://analytixnexa.netlify.app/",
     },
     {
       title: "PaletteGen",
@@ -77,6 +96,7 @@ function ProjectCards() {
         <SiPython key={"py"} fontSize={24} />,
         <SiGoogle key={"g"} fontSize={24} />,
       ],
+      link: "https://github.com/thanthtetaung4/PaletGen",
     },
     {
       title: "Mini Shell (Bash Clone)",
@@ -87,6 +107,7 @@ function ProjectCards() {
         <SiC key={"C"} fontSize={24} />,
         <SiLinux key={"Linux"} fontSize={24} />,
       ],
+      link: "https://github.com/thanthtetaung4/mini_shell",
     },
     {
       title: "Mini RT (Ray Tracing Engine)",
@@ -94,44 +115,52 @@ function ProjectCards() {
       content:
         "Renders realistic 3D scenes using ray tracing with lighting, shadows, and reflections via MiniLibX.",
       techStack: [<SiC key={"C"} fontSize={24} />],
+      link: "https://github.com/thanthtetaung4/PaletGen",
     },
   ];
 
   return (
     <div className="mt-5">
       <div className="grid gap-6 md:grid-cols-2">
-        {projects.map(({ title, description, content, techStack }, index) => (
-          <Card key={index} className="relative overflow-hidden">
-            <CardHeader>
-              <CardTitle>{title}</CardTitle>
-              <CardDescription className="flex justify-between">
-                <div>{description}</div>
-              </CardDescription>
-            </CardHeader>
-            <CardContent>{content}</CardContent>
-            <CardFooter>
-              <div
-                className="flex justify-between overflow-hidden"
-                style={{ width: `${24 * (techStack.length * 1.5)}px` }}
-              >
-                {techStack}
-              </div>
-            </CardFooter>
-            <BorderBeam
-              duration={duration}
-              size={400}
-              borderWidth={2}
-              className="from-transparent via-blue-500 to-transparent"
-            />
-            <BorderBeam
-              duration={duration}
-              delay={3}
-              size={400}
-              borderWidth={2}
-              className="from-transparent via-blue-500 to-transparent"
-            />
-          </Card>
-        ))}
+        {projects.map(
+          ({ title, description, content, techStack, link }, index) => (
+            <Card key={index} className="relative overflow-hidden">
+              <CardHeader>
+                <CardTitle>{title}</CardTitle>
+                <CardDescription className="flex justify-between">
+                  <div>{description}</div>
+                </CardDescription>
+              </CardHeader>
+              <CardContent>{content}</CardContent>
+              <CardFooter>
+                <div className="w-full flex justify-between">
+                  <div
+                    className="flex justify-between overflow-hidden"
+                    style={{ width: `${24 * (techStack.length * 1.5)}px` }}
+                  >
+                    {techStack}
+                  </div>
+                  <div>
+                    <ShinyButton link={link}>View Project</ShinyButton>
+                  </div>
+                </div>
+              </CardFooter>
+              <BorderBeam
+                duration={duration}
+                size={400}
+                borderWidth={2}
+                className="from-transparent via-blue-500 to-transparent"
+              />
+              <BorderBeam
+                duration={duration}
+                delay={3}
+                size={400}
+                borderWidth={2}
+                className="from-transparent via-blue-500 to-transparent"
+              />
+            </Card>
+          ),
+        )}
       </div>
     </div>
   );
