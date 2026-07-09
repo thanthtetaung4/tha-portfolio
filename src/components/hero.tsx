@@ -25,7 +25,7 @@ export function JobCard() {
     {
       title: "AI Software Engineer Intern",
       description: "Visier Inc.",
-      duration: "Present",
+      duration: "Jan - 2026 => Jun - 2026",
       lists: [
         "Shipped AI features for Vee, an LLM-powered HR assistant serving 2M+ users and 65,000+ organisations",
         "Delivered 2 chart visualisations and led an LLM upgrade, extending the life of product by 1.5 year",
