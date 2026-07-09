@@ -27,9 +27,10 @@ export function JobCard() {
       description: "Visier Inc.",
       duration: "Present",
       lists: [
-        "Optimized 'Vee' Chatbot",
-        "Performance Benchmarking",
-        "Systematic Validation",
+        "Shipped AI features for Vee, an LLM-powered HR assistant serving 2M+ users and 65,000+ organisations",
+        "Delivered 2 chart visualisations and led an LLM upgrade, extending the life of product by 1.5 year",
+        "Improved a 100+ scenario evaluation framework with Pytest and LangSmith for regression prevention and model governance",
+        "Resolved production issues using Splunk and LangSmith to improve reliability",
       ],
       content:
         "Focused on enhancing Visier’s AI capabilities for workforce analytics.",
