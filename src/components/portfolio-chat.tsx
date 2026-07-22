@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
-import { Bot, LoaderCircle, Send, User, X } from "lucide-react";
+import { Bot, LoaderCircle, Send, Sparkles, User, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -12,13 +12,18 @@ type ChatMessage = {
   content: string;
 };
 
-type ChatResponse = {
-  message?: string;
+type ErrorResponse = {
   error?: string;
 };
 
 const WELCOME_MESSAGE =
   "Hi! Ask me anything about Thant's experience, skills, education, or projects.";
+
+const THINKING_MESSAGES = [
+  "Reviewing Thant's portfolio…",
+  "Finding the most relevant details…",
+  "Preparing a concise answer…",
+];
 
 type PortfolioChatProps = {
   isOpen: boolean;
@@ -32,6 +37,7 @@ export function PortfolioChat({ isOpen, onClose }: PortfolioChatProps) {
   const [isSending, setIsSending] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const messagesRef = useRef<HTMLDivElement>(null);
+  const shouldAutoScrollRef = useRef(true);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -49,12 +55,9 @@ export function PortfolioChat({ isOpen, onClose }: PortfolioChatProps) {
     if (!isOpen) return;
 
     const messagesElement = messagesRef.current;
-    if (!messagesElement) return;
+    if (!messagesElement || !shouldAutoScrollRef.current) return;
 
-    messagesElement.scrollTo({
-      top: messagesElement.scrollHeight,
-      behavior: "smooth",
-    });
+    messagesElement.scrollTop = messagesElement.scrollHeight;
   }, [isOpen, messages, isSending]);
 
   async function sendMessage(event?: FormEvent<HTMLFormElement>) {
@@ -72,6 +75,7 @@ export function PortfolioChat({ isOpen, onClose }: PortfolioChatProps) {
     setInput("");
     setError(null);
     setIsSending(true);
+    shouldAutoScrollRef.current = true;
 
     try {
       const response = await fetch("/api/ai", {
@@ -79,17 +83,59 @@ export function PortfolioChat({ isOpen, onClose }: PortfolioChatProps) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: nextMessages }),
       });
-      const responseBody = (await response.json()) as ChatResponse;
 
-      if (!response.ok || !responseBody.message) {
+      if (!response.ok) {
+        const responseBody = (await response.json()) as ErrorResponse;
         throw new Error(responseBody.error || "Unable to get a response.");
+      }
+
+      if (!response.body) {
+        throw new Error("The response stream is unavailable.");
       }
 
       setMessages((current) => [
         ...current,
-        { role: "assistant", content: responseBody.message as string },
+        { role: "assistant", content: "" },
       ]);
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let receivedContent = false;
+
+      while (true) {
+        const { done, value } = await reader.read();
+        const chunk = decoder.decode(value, { stream: !done });
+
+        if (chunk) {
+          receivedContent = true;
+          setMessages((current) => {
+            const updated = [...current];
+            const assistantMessage = updated.at(-1);
+
+            if (assistantMessage?.role === "assistant") {
+              updated[updated.length - 1] = {
+                ...assistantMessage,
+                content: assistantMessage.content + chunk,
+              };
+            }
+
+            return updated;
+          });
+        }
+
+        if (done) break;
+      }
+
+      if (!receivedContent) {
+        throw new Error("The AI service returned an empty response.");
+      }
     } catch (requestError) {
+      setMessages((current) => {
+        const lastMessage = current.at(-1);
+        return lastMessage?.role === "assistant" && !lastMessage.content
+          ? current.slice(0, -1)
+          : current;
+      });
       setError(
         requestError instanceof Error
           ? requestError.message
@@ -145,6 +191,12 @@ export function PortfolioChat({ isOpen, onClose }: PortfolioChatProps) {
 
           <div
             ref={messagesRef}
+            onScroll={(event) => {
+              const element = event.currentTarget;
+              const distanceFromBottom =
+                element.scrollHeight - element.scrollTop - element.clientHeight;
+              shouldAutoScrollRef.current = distanceFromBottom < 24;
+            }}
             className="flex-1 space-y-4 overflow-y-auto overscroll-contain px-4 py-4"
             aria-live="polite"
           >
@@ -154,25 +206,13 @@ export function PortfolioChat({ isOpen, onClose }: PortfolioChatProps) {
                 key={`${message.role}-${index}`}
                 role={message.role}
                 content={message.content}
+                isStreaming={
+                  isSending &&
+                  index === messages.length - 1 &&
+                  message.role === "assistant"
+                }
               />
             ))}
-            {isSending && (
-              <div className="flex items-end gap-2">
-                <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-white/10 text-zinc-300">
-                  <Bot className="size-4" />
-                </span>
-                <div className="flex items-center gap-1 rounded-2xl rounded-bl-sm bg-white/10 px-4 py-3">
-                  {[0, 1, 2].map((dot) => (
-                    <span
-                      key={dot}
-                      className="size-1.5 animate-pulse rounded-full bg-zinc-400"
-                      style={{ animationDelay: `${dot * 150}ms` }}
-                    />
-                  ))}
-                  <span className="sr-only">Assistant is responding</span>
-                </div>
-              </div>
-            )}
           </div>
 
           <form
@@ -219,7 +259,11 @@ export function PortfolioChat({ isOpen, onClose }: PortfolioChatProps) {
   );
 }
 
-function Message({ role, content }: ChatMessage) {
+function Message({
+  role,
+  content,
+  isStreaming = false,
+}: ChatMessage & { isStreaming?: boolean }) {
   const isUser = role === "user";
 
   return (
@@ -232,7 +276,7 @@ function Message({ role, content }: ChatMessage) {
       >
         {isUser ? <User className="size-4" /> : <Bot className="size-4" />}
       </span>
-      <p
+      <div
         className={cn(
           "max-w-[82%] whitespace-pre-wrap rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed",
           isUser
@@ -240,8 +284,42 @@ function Message({ role, content }: ChatMessage) {
             : "rounded-bl-sm bg-white/10 text-zinc-100",
         )}
       >
-        {content}
-      </p>
+        {isStreaming && !content ? (
+          <ThinkingStatus />
+        ) : (
+          content
+        )}
+        {isStreaming && content && (
+          <span
+            aria-hidden="true"
+            className="ml-0.5 inline-block h-4 w-0.5 animate-pulse translate-y-0.5 bg-zinc-300"
+          />
+        )}
+        {isStreaming && <span className="sr-only">Assistant is responding</span>}
+      </div>
     </div>
+  );
+}
+
+function ThinkingStatus() {
+  const [messageIndex, setMessageIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setMessageIndex((current) =>
+        Math.min(current + 1, THINKING_MESSAGES.length - 1),
+      );
+    }, 1_800);
+
+    return () => window.clearInterval(interval);
+  }, []);
+
+  return (
+    <span className="flex items-center gap-2 text-zinc-400">
+      <Sparkles className="size-3.5 animate-pulse text-violet-300" aria-hidden="true" />
+      <span key={messageIndex} className="animate-pulse">
+        {THINKING_MESSAGES[messageIndex]}
+      </span>
+    </span>
   );
 }

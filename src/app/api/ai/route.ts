@@ -1,7 +1,8 @@
 import { readFile, readdir } from "node:fs/promises";
+import { ChatOpenRouter } from "@langchain/openrouter"
+import { HumanMessage, SystemMessage, AIMessage } from "langchain";
 import path from "node:path";
 
-const OPENROUTER_CHAT_URL = "https://openrouter.ai/api/v1/chat/completions";
 const DEFAULT_MODEL = "google/gemma-4-26b-a4b-it";
 const MAX_MESSAGES = 20;
 const MAX_MESSAGE_LENGTH = 4_000;
@@ -11,15 +12,6 @@ type ChatRole = "user" | "assistant";
 type ChatMessage = {
   role: ChatRole;
   content: string;
-};
-
-type OpenRouterResponse = {
-  error?: { message?: string };
-  choices?: Array<{
-    message?: {
-      content?: string;
-    };
-  }>;
 };
 
 let contextPromise: Promise<string> | undefined;
@@ -106,11 +98,27 @@ function jsonError(message: string, status: number): Response {
   return Response.json({ error: message }, { status });
 }
 
-export async function POST(request: Request): Promise<Response> {
+function setupChat(): ChatOpenRouter {
   const apiKey = process.env.OPENROUTER_API_KEY;
+  const langSmithApiKey = process.env.LANGSMITH_API_KEY;
   if (!apiKey) {
-    console.error("OPENROUTER_API_KEY is not configured");
-    return jsonError("AI chat is not configured.", 503);
+    throw new Error("OPENROUTER_API_KEY is not configured");
+  }
+
+  return new ChatOpenRouter({
+    model: process.env.OPENROUTER_MODEL || DEFAULT_MODEL,
+    maxTokens: 600,
+    temperature: 0.2,
+  });
+}
+
+export async function POST(request: Request): Promise<Response> {
+  let llm: ChatOpenRouter;
+  try {
+    llm = setupChat();
+  } catch (error) {
+    console.error("AI chat setup failed", error);
+    return jsonError("The AI service is not properly configured.", 500);
   }
 
   let body: unknown;
@@ -135,42 +143,42 @@ export async function POST(request: Request): Promise<Response> {
 
   try {
     const instructions = await getPortfolioContext();
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
-    const openRouterResponse = await fetch(OPENROUTER_CHAT_URL, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-        ...(siteUrl ? { "HTTP-Referer": siteUrl } : {}),
-        "X-OpenRouter-Title": "Tha Portfolio",
+    const openRouterStream = await llm.stream(
+      [
+        new SystemMessage(instructions),
+        ...messages.map((msg) =>
+          msg.role === "user"
+            ? new HumanMessage(msg.content)
+            : new AIMessage(msg.content),
+        ),
+      ],
+      { signal: AbortSignal.timeout(60_000) },
+    );
+
+    const encoder = new TextEncoder();
+    const responseStream = new ReadableStream<Uint8Array>({
+      async start(controller) {
+        try {
+          for await (const chunk of openRouterStream) {
+            if (typeof chunk.content === "string" && chunk.content) {
+              controller.enqueue(encoder.encode(chunk.content));
+            }
+          }
+          controller.close();
+        } catch (error) {
+          console.error("AI chat stream failed", error);
+          controller.error(error);
+        }
       },
-      body: JSON.stringify({
-        model: process.env.OPENROUTER_MODEL || DEFAULT_MODEL,
-        messages: [{ role: "system", content: instructions }, ...messages],
-        stream: false,
-        max_tokens: 600,
-        temperature: 0.2,
-      }),
-      signal: AbortSignal.timeout(60_000),
     });
 
-    const responseBody = (await openRouterResponse.json()) as OpenRouterResponse;
-    if (!openRouterResponse.ok) {
-      console.error(
-        "OpenRouter API error",
-        openRouterResponse.status,
-        responseBody.error?.message,
-      );
-      return jsonError("The AI service could not complete the request.", 502);
-    }
-
-    const answer = responseBody.choices?.[0]?.message?.content?.trim();
-    if (!answer) {
-      console.error("OpenRouter response did not contain message content");
-      return jsonError("The AI service returned an empty response.", 502);
-    }
-
-    return Response.json({ message: answer });
+    return new Response(responseStream, {
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cache-Control": "no-cache, no-transform",
+        "X-Content-Type-Options": "nosniff",
+      },
+    });
   } catch (error) {
     console.error("AI chat request failed", error);
     return jsonError("The AI service is temporarily unavailable.", 502);
