@@ -177,3 +177,70 @@ IoT prototype that automatically controls street lighting using environmental se
 
 - MicroPython
 - Azure IoT Central
+
+---
+
+---
+
+## Inception of Things
+
+Infrastructure-focused Kubernetes project demonstrating lightweight cluster deployment, container orchestration, networking, and GitOps-based continuous delivery across virtual machines and Docker.
+
+### Highlights
+
+- Multi-node Kubernetes cluster
+- Automated infrastructure provisioning with Vagrant
+- Kubernetes server and worker node architecture
+- Host-based Ingress routing
+- Multi-application deployment
+- Local Kubernetes cluster using k3d
+- GitOps continuous deployment with Argo CD
+- Automated synchronization from GitHub
+- Infrastructure as Code using YAML and shell scripts
+
+### Project Parts
+
+#### Part 1 — Multi-Node K3s Cluster
+
+Provisioned two Vagrant virtual machines running K3s in server and agent mode.
+
+- Kubernetes control plane
+- Worker node registration
+- Private VM networking
+- Automated cluster provisioning
+
+#### Part 2 — Kubernetes Ingress
+
+Deployed multiple web applications on a K3s cluster and exposed them through Kubernetes Ingress.
+
+- Kubernetes Deployments
+- Services
+- Ingress routing
+- Host-based traffic forwarding
+- Default application fallback
+
+#### Part 3 — GitOps with Argo CD
+
+Built a local Kubernetes environment using k3d and implemented GitOps deployment with Argo CD.
+
+- Docker-based Kubernetes cluster
+- Declarative Kubernetes manifests
+- GitHub as the source of truth
+- Automatic application synchronization
+- Rolling application updates through Git commits
+- Argo CD web dashboard
+
+### Technologies
+
+- Kubernetes
+- K3s
+- k3d
+- Argo CD
+- Docker
+- Vagrant
+- VirtualBox
+- kubectl
+- GitHub
+- YAML
+- Shell Scripting
+- GitOps
