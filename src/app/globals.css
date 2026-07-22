@@ -3,6 +3,25 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@keyframes wave-hand {
+  0%, 60%, 100% { transform: rotate(0deg); }
+  10% { transform: rotate(18deg); }
+  20% { transform: rotate(-10deg); }
+  30% { transform: rotate(18deg); }
+  40% { transform: rotate(-6deg); }
+  50% { transform: rotate(10deg); }
+}
+
+.wave-hand {
+  animation: wave-hand 2.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wave-hand {
+    animation: none;
+  }
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

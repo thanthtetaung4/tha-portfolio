@@ -149,14 +149,14 @@ function ProjectCards() {
                 duration={duration}
                 size={400}
                 borderWidth={2}
-                className="from-transparent via-blue-500 to-transparent"
+                className="from-transparent via-violet-400 to-transparent"
               />
               <BorderBeam
                 duration={duration}
                 delay={3}
                 size={400}
                 borderWidth={2}
-                className="from-transparent via-blue-500 to-transparent"
+                className="from-transparent via-violet-400 to-transparent"
               />
             </Card>
           ),

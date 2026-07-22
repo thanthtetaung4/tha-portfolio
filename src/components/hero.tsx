@@ -120,7 +120,15 @@ export function Hero() {
     <section id="hero">
       <div className="grid gap-2 md:grid-cols-4 md:justify-between md:items-start lg:grid-cols-12">
         <p className="text-3xl font-boldtext-white inline-block md:leading-[-2.7] lg:col-span-2">
-          Hi 👋, I am{" "}
+          Hi{" "}
+          <span
+            className="wave-hand inline-block origin-[70%_70%]"
+            role="img"
+            aria-label="waving hand"
+          >
+            👋
+          </span>
+          , I am{" "}
         </p>
         <div
           className="md:col-span-3 lg:col-span-10"
@@ -133,8 +141,8 @@ export function Hero() {
           />
         </div>
         <p className="mt-5 text-lg md:col-span-full md:text-xl">
-          Full-stack software developer skilled in system programming and
-          full-stack development, with experience leading projects, freelancing,
+          Software Engineer skilled in AI engineering, full-stack development and
+          system programming, with experience in shipping production features, leading projects, freelancing,
           releasing tool and winning hackathons.
         </p>
       </div>

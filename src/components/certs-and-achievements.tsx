@@ -35,7 +35,7 @@ export function CertCards() {
 		<div className="grid gap-4 md:grid-cols-2">
 			{certs.map(({title, organisation, date, content}, index) => (
 				<Card key={index} className="relative overflow-hidden">
-					<ShineBorder shineColor="#6A5ACD" />
+					<ShineBorder shineColor="#A684FF" />
 					<CardHeader>
 						<CardTitle>{title}</CardTitle>
 						<CardDescription className="flex justify-between">
