@@ -1,5 +1,30 @@
 # Experience
 
+## Software Developer Intern
+**The Software Practice Pte. Ltd.**
+July 2026 – Present
+
+Working on migrating a legacy Java system to a modern ExpressJS/TypeScript stack.
+
+### Responsibilities
+- Migrating legacy Java system components to ExpressJS/TypeScript
+- Building unit, integration, and end-to-end test suites
+- Collaborating in an Agile/Scrum team environment
+- Participating in sprint planning and code reviews
+
+### Key Achievements (in progress)
+- Migrating ~5 modules to a modern ExpressJS/TypeScript stack, targeting a ~30% reduction in API response time
+- Building test suites targeting 90%+ coverage across the codebase
+- Contributing to a 2-engineer Agile team across ongoing sprint cycles
+
+### Technologies
+- TypeScript
+- JavaScript
+- Node.js / ExpressJS
+- Git
+- Docker
+- Vitest
+
 ## AI Software Developer Intern
 **Visier Inc.**
 
