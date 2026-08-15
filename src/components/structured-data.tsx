@@ -23,12 +23,20 @@ function buildGraph() {
     name: siteConfig.name,
     givenName: "Thant Htet",
     familyName: "Aung",
-    alternateName: "Thant",
+    alternateName: ["Thant", "Thant H. Aung"],
     url: siteUrl,
     mainEntityOfPage: { "@id": PAGE_ID },
     image: absoluteUrl("/opengraph-image"),
     jobTitle: siteConfig.jobTitle,
     description: siteConfig.description,
+    // Several unrelated people share this name in search results, so spell out
+    // the details that separate this one: field, city, employer and schools.
+    disambiguatingDescription:
+      "AI software engineer and full-stack developer based in Singapore, specialising in agentic AI, retrieval-augmented generation and LLM evaluation. Graduate of Coventry University and 42 Singapore; previously an AI Software Engineer Intern at Visier Inc.",
+    homeLocation: {
+      "@type": "Place",
+      name: siteConfig.location.city,
+    },
     email: `mailto:${siteConfig.email}`,
     // Phone deliberately omitted: it adds nothing for search and is the easiest
     // field for scrapers to harvest. The WhatsApp link still covers humans.

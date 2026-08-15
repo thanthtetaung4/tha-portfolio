@@ -121,8 +121,9 @@ export default function RootLayout({
         */}
         <nav aria-label="Sections" className="sr-only">
           <ul>
-            <li><a href="#hero">About Thant Htet Aung</a></li>
+            <li><a href="#hero">Thant Htet Aung — home</a></li>
             <li><a href="#exp">Work experience</a></li>
+            <li><a href="#about">About Thant Htet Aung</a></li>
             <li><a href="#certs">Certifications and achievements</a></li>
             <li><a href="#skills">Technical skills</a></li>
             <li><a href="#projects">Projects</a></li>

@@ -230,3 +230,28 @@ export const education = [
     year: "2026",
   },
 ];
+
+/**
+ * Long-form bio, rendered as visible prose. Everything else on the page is
+ * headings, cards and lists — this is the only place a crawler finds the full
+ * name in running sentences, which matters because several unrelated people
+ * share it. Kept here rather than in the component so it stays next to the
+ * data the JSON-LD graph is built from.
+ */
+export const about = {
+  paragraphs: [
+    "I'm Thant Htet Aung, an AI software engineer and full-stack developer based in Singapore. I build practical AI products that solve real problems — agentic systems, retrieval-augmented generation pipelines, and the evaluation tooling that keeps them honest.",
+    "Most recently I was an AI Software Engineer Intern at Visier, where I shipped production AI features for Vee, an LLM-powered HR assistant used by more than 2 million people across 65,000+ organisations. That work spanned customer-facing features, LLM model evaluation, prompt engineering, automated evaluation frameworks and production debugging.",
+    "I hold a First Class BSc (Hons) in Computing Science from Coventry University and completed the RNCP Level 6 programme at 42 Singapore, where the C and systems-programming curriculum shaped how I think about performance and correctness. I also run Goodev, where I consult, design, develop and deliver software for clients end to end.",
+    "I enjoy designing AI systems that go beyond simple chatbots by incorporating reasoning, planning, evaluation and tool use. Outside of work I build open-source projects, experiment with local LLMs and explore agentic AI architectures.",
+  ],
+  interests: [
+    "Agentic AI",
+    "LangGraph",
+    "Multi-agent systems",
+    "AI evaluation",
+    "AI infrastructure",
+    "Local LLMs",
+    "Developer tooling",
+  ],
+} as const;
