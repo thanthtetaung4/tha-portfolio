@@ -3,6 +3,8 @@ import { ChatOpenRouter } from "@langchain/openrouter"
 import { HumanMessage, SystemMessage, AIMessage } from "langchain";
 import path from "node:path";
 
+import { checkRateLimit, getClientKey } from "./rate-limit";
+
 const DEFAULT_MODEL = "google/gemma-4-26b-a4b-it";
 const MAX_MESSAGES = 20;
 const MAX_MESSAGE_LENGTH = 4_000;
@@ -94,6 +96,13 @@ function parseMessages(value: unknown): ChatMessage[] | null {
   return messages;
 }
 
+function formatWait(seconds: number): string {
+  if (seconds < 60) return `${seconds} second${seconds === 1 ? "" : "s"}`;
+
+  const minutes = Math.ceil(seconds / 60);
+  return `${minutes} minute${minutes === 1 ? "" : "s"}`;
+}
+
 function jsonError(message: string, status: number): Response {
   return Response.json({ error: message }, { status });
 }
@@ -113,6 +122,22 @@ function setupChat(): ChatOpenRouter {
 }
 
 export async function POST(request: Request): Promise<Response> {
+  const rateLimit = checkRateLimit(getClientKey(request));
+  if (!rateLimit.allowed) {
+    return Response.json(
+      {
+        error: `You're sending messages too quickly. Try again in ${formatWait(
+          rateLimit.retryAfterSeconds,
+        )}.`,
+        retryAfter: rateLimit.retryAfterSeconds,
+      },
+      {
+        status: 429,
+        headers: { "Retry-After": String(rateLimit.retryAfterSeconds) },
+      },
+    );
+  }
+
   let llm: ChatOpenRouter;
   try {
     llm = setupChat();

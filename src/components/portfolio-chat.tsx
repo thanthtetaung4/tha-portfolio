@@ -14,6 +14,7 @@ type ChatMessage = {
 
 type ErrorResponse = {
   error?: string;
+  retryAfter?: number;
 };
 
 const WELCOME_MESSAGE =
@@ -35,6 +36,7 @@ export function PortfolioChat({ isOpen, onClose }: PortfolioChatProps) {
   const [input, setInput] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isSending, setIsSending] = useState(false);
+  const [cooldownSeconds, setCooldownSeconds] = useState(0);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const messagesRef = useRef<HTMLDivElement>(null);
   const shouldAutoScrollRef = useRef(true);
@@ -60,11 +62,22 @@ export function PortfolioChat({ isOpen, onClose }: PortfolioChatProps) {
     messagesElement.scrollTop = messagesElement.scrollHeight;
   }, [isOpen, messages, isSending]);
 
+  useEffect(() => {
+    if (cooldownSeconds <= 0) return;
+
+    const timeout = window.setTimeout(
+      () => setCooldownSeconds((current) => Math.max(0, current - 1)),
+      1_000,
+    );
+
+    return () => window.clearTimeout(timeout);
+  }, [cooldownSeconds]);
+
   async function sendMessage(event?: FormEvent<HTMLFormElement>) {
     event?.preventDefault();
 
     const content = input.trim();
-    if (!content || isSending) return;
+    if (!content || isSending || cooldownSeconds > 0) return;
 
     const nextMessages: ChatMessage[] = [
       ...messages,
@@ -86,6 +99,19 @@ export function PortfolioChat({ isOpen, onClose }: PortfolioChatProps) {
 
       if (!response.ok) {
         const responseBody = (await response.json()) as ErrorResponse;
+
+        if (response.status === 429) {
+          const retryAfter =
+            Number(responseBody.retryAfter) ||
+            Number(response.headers.get("Retry-After")) ||
+            60;
+
+          // Hand the question back so the visitor can resend it after the wait.
+          setMessages(messages);
+          setInput(content);
+          setCooldownSeconds(Math.ceil(retryAfter));
+        }
+
         throw new Error(responseBody.error || "Unable to get a response.");
       }
 
@@ -230,17 +256,21 @@ export function PortfolioChat({ isOpen, onClose }: PortfolioChatProps) {
                 value={input}
                 onChange={(event) => setInput(event.target.value)}
                 onKeyDown={handleKeyDown}
-                disabled={isSending}
+                disabled={isSending || cooldownSeconds > 0}
                 maxLength={4000}
                 rows={1}
-                placeholder="Ask about experience or projects..."
+                placeholder={
+                  cooldownSeconds > 0
+                    ? `Available again in ${cooldownSeconds}s...`
+                    : "Ask about experience or projects..."
+                }
                 aria-label="Message"
                 className="max-h-28 min-h-9 resize-none field-sizing-content border-0 bg-transparent px-2 py-2 text-sm shadow-none focus-visible:ring-0"
               />
               <Button
                 type="submit"
                 size="icon"
-                disabled={!input.trim() || isSending}
+                disabled={!input.trim() || isSending || cooldownSeconds > 0}
                 aria-label="Send message"
                 className="size-9 rounded-lg bg-white text-zinc-950 hover:bg-zinc-200"
               >
@@ -252,7 +282,9 @@ export function PortfolioChat({ isOpen, onClose }: PortfolioChatProps) {
               </Button>
             </div>
             <p className="mt-2 text-center text-[11px] text-zinc-500">
-              Enter to send · Shift + Enter for a new line
+              {cooldownSeconds > 0
+                ? `Rate limited · try again in ${cooldownSeconds}s`
+                : "Enter to send · Shift + Enter for a new line"}
             </p>
           </form>
         </section>
