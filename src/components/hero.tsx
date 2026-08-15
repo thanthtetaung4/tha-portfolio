@@ -17,47 +17,18 @@ import { FaLinkedin } from "react-icons/fa";
 import { ShinyButton } from "@/components/ui/shiny-button";
 import { MagicCard } from "@/components/ui/magic-card";
 import Link from "next/link";
+import { experiences } from "@/lib/portfolio-data";
+import { siteConfig } from "@/lib/site";
 
 export function JobCard() {
   const { theme } = useTheme();
 
-  const experiences = [
-    {
-      title: "AI Software Engineer Intern",
-      description: "Visier Inc.",
-      duration: "Jan - 2026 => Jun - 2026",
-      lists: [
-        "Shipped AI features for Vee, an LLM-powered HR assistant serving 2M+ users and 65,000+ organisations",
-        "Delivered 2 chart visualisations and led an LLM upgrade, extending the life of product by 1.5 year",
-        "Improved a 100+ scenario evaluation framework with Pytest and LangSmith for regression prevention and model governance",
-        "Resolved production issues using Splunk and LangSmith to improve reliability",
-      ],
-      content:
-        "Focused on enhancing Visier’s AI capabilities for workforce analytics.",
-    },
-    {
-      title: "Founder & Developer",
-      description: "Goodev",
-      duration: "Present",
-      lists: ["Consult", "Design", "Develop", "Deliver"],
-      content: "Based on the client needs",
-    },
-    {
-      title: "Tech Lead",
-      description: "SCS@PSBA",
-      duration: "Dec - 2023 => Dec - 2024",
-      lists: [
-        "Led tech team",
-        "Curated workshops & focus groups",
-        "Developed SCS@PSBA the website",
-        "Handled administrative tasks",
-      ],
-    },
-  ];
-
   return (
-    <section id="exp">
-      <h2 className="text-2xl font-bold text-black dark:text-white">
+    <section id="exp" aria-labelledby="exp-heading">
+      <h2
+        id="exp-heading"
+        className="text-2xl font-bold text-black dark:text-white"
+      >
         Experiences
       </h2>
       <div className="grid gap-4 mt-4 w-ful lg:grid-cols-2">
@@ -72,7 +43,11 @@ export function JobCard() {
                 className="p-0 h-full"
               >
                 <CardHeader className="border-border border-b p-4 [.border-b]:pb-4">
-                  <CardTitle>{title}</CardTitle>
+                  {/* Bare <h3>: preflight resets heading size/weight to inherit,
+                      so this adds document outline without changing the design. */}
+                  <CardTitle>
+                    <h3>{title}</h3>
+                  </CardTitle>
                   <CardDescription>
                     <div className="flex justify-between">
                       <div>{description}</div>
@@ -117,29 +92,45 @@ export function Hero() {
   }, [width]);
 
   return (
-    <section id="hero">
+    <section id="hero" aria-labelledby="hero-heading">
       <div className="grid gap-2 md:grid-cols-4 md:justify-between md:items-start lg:grid-cols-12">
-        <p className="text-3xl font-boldtext-white inline-block md:leading-[-2.7] lg:col-span-2">
-          Hi{" "}
-          <span
-            className="wave-hand inline-block origin-[70%_70%]"
-            role="img"
-            aria-label="waving hand"
-          >
-            👋
+        {/*
+          `contents` keeps the grid layout byte-identical while giving the page a
+          single, stable <h1>. The visible copy animates; the sr-only span holds
+          the full name and role so the heading text a crawler reads never
+          changes between renders.
+        */}
+        <h1 id="hero-heading" className="contents">
+          <span className="sr-only">
+            {siteConfig.name} — {siteConfig.headline} based in{" "}
+            {siteConfig.location.city}
           </span>
-          , I am{" "}
-        </p>
-        <div
-          className="md:col-span-3 lg:col-span-10"
-          style={{ marginLeft: ml }}
-          id="word"
-        >
-          <WordRotate
-            className="text-4xl font-bold text-black dark:text-white inline-block"
-            words={["Thant", "A Developer"]}
-          />
-        </div>
+          <span
+            aria-hidden="true"
+            className="text-3xl font-bold text-white inline-block md:leading-[-2.7] lg:col-span-2"
+          >
+            Hi{" "}
+            <span
+              className="wave-hand inline-block origin-[70%_70%]"
+              role="img"
+              aria-label="waving hand"
+            >
+              👋
+            </span>
+            , I am{" "}
+          </span>
+          <span
+            aria-hidden="true"
+            className="block md:col-span-3 lg:col-span-10"
+            style={{ marginLeft: ml }}
+            id="word"
+          >
+            <WordRotate
+              className="text-4xl font-bold text-black dark:text-white inline-block"
+              words={["Thant", "A Developer"]}
+            />
+          </span>
+        </h1>
         <p className="mt-5 text-lg md:col-span-full md:text-xl">
           Software Engineer skilled in AI engineering, full-stack development and
           system programming, with experience in shipping production features, leading projects, freelancing,
@@ -148,17 +139,31 @@ export function Hero() {
       </div>
       <div className="mt-5 flex justify-around">
         <div className="w-1/2 flex justify-around items-center">
-          <Link href="https://github.com/thanthtetaung4" target="blank">
-            <FaGithub className="text-2xl md:text-3xl" />
+          <Link
+            href={siteConfig.socials.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${siteConfig.name} on GitHub`}
+            title={`${siteConfig.name} on GitHub`}
+          >
+            <FaGithub className="text-2xl md:text-3xl" aria-hidden="true" />
           </Link>
           <Link
-            href="https://www.linkedin.com/in/thant-htet-aung/"
-            target="blank"
+            href={siteConfig.socials.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${siteConfig.name} on LinkedIn`}
+            title={`${siteConfig.name} on LinkedIn`}
           >
-            <FaLinkedin className="text-2xl md:text-3xl" />
+            <FaLinkedin className="text-2xl md:text-3xl" aria-hidden="true" />
           </Link>
         </div>
-        <ShinyButton link="./resume.pdf">Get My Resume</ShinyButton>
+        <ShinyButton
+          link="/resume.pdf"
+          label={`Download ${siteConfig.name}'s resume (PDF)`}
+        >
+          Get My Resume
+        </ShinyButton>
       </div>
       <div className="mt-5">
         <JobCard />

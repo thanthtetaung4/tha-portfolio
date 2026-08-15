@@ -37,13 +37,17 @@ export function WordRotate({
   return (
     <div className="overflow-hidden py-2 md:py-0">
       <AnimatePresence mode="wait">
-        <motion.h1
+        {/*
+          A span, not a heading: the rotating word is decorative and the page's
+          real <h1> lives in the hero, where its text stays stable for crawlers.
+        */}
+        <motion.span
           key={words[index]}
           className={cn(className)}
           {...motionProps}
         >
           {words[index]}
-        </motion.h1>
+        </motion.span>
       </AnimatePresence>
     </div>
   )

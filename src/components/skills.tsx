@@ -31,92 +31,95 @@ const CIcon = (props: React.SVGProps<SVGSVGElement>) => (
 	</svg>
 );
 
+const SKILLS = [
+	{
+		name: "NextJS",
+		icon: <RiNextjsFill className="text-5xl"/>,
+
+	},
+	{
+		name: "ReactJS",
+		icon: <FaReact className="text-5xl"/>,
+
+	},
+	{
+		name: "Docker",
+		icon: <FaDocker className="text-5xl"/>,
+
+	},
+	{
+		name: "TailwindCSS",
+		icon: <RiTailwindCssFill className="text-5xl"/>,
+
+	},
+	{
+		name: "NodeJS",
+		icon: <FaNodeJs className="text-5xl"/>,
+
+	},
+	{
+		name: "Flask",
+		icon: <SiFlask className="text-5xl"/>,
+
+	},
+	{
+		name: "C++",
+		// Decorative: the skill name is rendered as text right beside it.
+		icon: <Image alt="" aria-hidden="true" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" width={48} height={48} className="grayscale" unoptimized/>
+
+	},
+	{
+		name: "C",
+		icon: <CIcon/>,
+
+	},
+	{
+		name: "JavaScript",
+		icon: <FaJs className="text-5xl"/>
+
+	},
+	{
+		name: "Python",
+		icon: <FaPython className="text-5xl"/>,
+
+	},
+	{
+		name: "HTML",
+		icon: <FaHtml5 className="text-5xl"/>
+
+	},
+	{
+		name: "CSS",
+		icon: <FaCss3 className="text-5xl"/>,
+
+	},
+	{
+		name: "GitHub",
+		icon: <BsGithub className="text-5xl"/>
+
+	},
+	{
+		name: "VS Code",
+		icon: <VscVscode className="text-5xl"/>,
+	},
+	{
+		name: "Git",
+		icon: <FaGitAlt className="text-5xl"/>
+	},
+	{
+		name: "Shell",
+		icon: <SiGnubash className="text-5xl"/>,
+	},
+	{
+		name: "Linux",
+		icon: <FaLinux className="text-5xl"/>,
+	},
+];
+
+
 export function SkillsSM () {
 	const [page, setPage] = useState(1);
-
-	const skills = [
-		{
-			name: "NextJS",
-			icon: <RiNextjsFill className="text-5xl"/>,
-
-		},
-		{
-			name: "ReactJS",
-			icon: <FaReact className="text-5xl"/>,
-
-		},
-		{
-			name: "Docker",
-			icon: <FaDocker className="text-5xl"/>,
-
-		},
-		{
-			name: "TailwindCSS",
-			icon: <RiTailwindCssFill className="text-5xl"/>,
-
-		},
-		{
-			name: "NodeJS",
-			icon: <FaNodeJs className="text-5xl"/>,
-
-		},
-		{
-			name: "Flask",
-			icon: <SiFlask className="text-5xl"/>,
-
-		},
-		{
-			name: "C++",
-			icon: <Image alt="cpp" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" width={48} height={48} className="grayscale"/>
-
-		},
-		{
-			name: "C",
-			icon: <CIcon/>,
-
-		},
-		{
-			name: "JavaScript",
-			icon: <FaJs className="text-5xl"/>
-
-		},
-		{
-			name: "Python",
-			icon: <FaPython className="text-5xl"/>,
-
-		},
-		{
-			name: "HTML",
-			icon: <FaHtml5 className="text-5xl"/>
-
-		},
-		{
-			name: "CSS",
-			icon: <FaCss3 className="text-5xl"/>,
-
-		},
-		{
-			name: "GitHub",
-			icon: <BsGithub className="text-5xl"/>
-
-		},
-		{
-			name: "VS Code",
-			icon: <VscVscode className="text-5xl"/>,
-		},
-		{
-			name: "Git",
-			icon: <FaGitAlt className="text-5xl"/>
-		},
-		{
-			name: "Shell",
-			icon: <SiGnubash className="text-5xl"/>,
-		},
-		{
-			name: "Linux",
-			icon: <FaLinux className="text-5xl"/>,
-		},
-	];
+	const skills = SKILLS;
 
 	const itemsPerPage = 6;
 	const totalPages = Math.ceil(skills.length / itemsPerPage);
@@ -178,89 +181,7 @@ export function SkillsSM () {
 }
 
 export function SkillsMD () {
-	const skills = [
-		{
-			name: "NextJS",
-			icon: <RiNextjsFill className="text-5xl"/>,
-
-		},
-		{
-			name: "ReactJS",
-			icon: <FaReact className="text-5xl"/>,
-
-		},
-		{
-			name: "Docker",
-			icon: <FaDocker className="text-5xl"/>,
-
-		},
-		{
-			name: "TailwindCSS",
-			icon: <RiTailwindCssFill className="text-5xl"/>,
-
-		},
-		{
-			name: "NodeJS",
-			icon: <FaNodeJs className="text-5xl"/>,
-
-		},
-		{
-			name: "Flask",
-			icon: <SiFlask className="text-5xl"/>,
-
-		},
-		{
-			name: "C++",
-			icon: <Image alt="cpp" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" width={48} height={48} className="grayscale"/>
-
-		},
-		{
-			name: "C",
-			icon: <CIcon/>,
-
-		},
-		{
-			name: "JavaScript",
-			icon: <FaJs className="text-5xl"/>
-
-		},
-		{
-			name: "Python",
-			icon: <FaPython className="text-5xl"/>,
-
-		},
-		{
-			name: "HTML",
-			icon: <FaHtml5 className="text-5xl"/>
-
-		},
-		{
-			name: "CSS",
-			icon: <FaCss3 className="text-5xl"/>,
-
-		},
-		{
-			name: "GitHub",
-			icon: <BsGithub className="text-5xl"/>
-
-		},
-		{
-			name: "VS Code",
-			icon: <VscVscode className="text-5xl"/>,
-		},
-		{
-			name: "Git",
-			icon: <FaGitAlt className="text-5xl"/>
-		},
-		{
-			name: "Shell",
-			icon: <SiGnubash className="text-5xl"/>,
-		},
-		{
-			name: "Linux",
-			icon: <FaLinux className="text-5xl"/>,
-		},
-	];
+	const skills = SKILLS;
 
 	return (<>
 				<div className="hidden md:grid md:grid-cols-3 md:gap-1.5 mt-4">
@@ -282,8 +203,9 @@ export function SkillsMD () {
 
 export function Skills () {
 	return (<>
-				<section className="mt-5" id="skills">
-					<h2 className="text-2xl font-bold text-black dark:text-white">Skills</h2>
+				<section className="mt-5" id="skills" aria-labelledby="skills-heading">
+					<h2 id="skills-heading" className="text-2xl font-bold text-black dark:text-white">Skills</h2>
+					{/* Same list, two breakpoint-specific layouts. */}
 					<SkillsSM/>
 					<SkillsMD/>
 				</section>
