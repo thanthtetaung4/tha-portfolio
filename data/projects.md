@@ -2,6 +2,37 @@
 
 ---
 
+---
+
+## SAGE
+
+Modular multi-tenant agentic AI assistant for businesses, starting with large-catalog retail. Handles shopping and customer service across multiple stores, with industry-specific tool bundles delivered through MCP.
+
+### Highlights
+
+- Agentic plan, act, observe loop
+- Modular multi-tenant architecture
+- Per-industry MCP bundles (Retail, F&B)
+- Optional tool modules shared only with relevant business types
+- Product search, store availability, pickup and delivery support
+- LLM observability and tracing
+- Live deployment
+
+### Technologies
+
+Frontend:
+- Next.js
+
+Backend:
+- FastMCP
+- PostgreSQL
+- Claude
+- OpenClaw
+
+Observability:
+- Langfuse
+
+
 ## KNOVERSE
 
 AI-powered team collaboration platform featuring secure RAG pipelines, internal knowledge bases, team-based data isolation, and containerized deployment.
